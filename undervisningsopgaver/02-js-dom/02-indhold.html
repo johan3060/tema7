@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <style>
+        .grøn {
+            height: 100px;
+            width: 100px;
+            background-color: green;
+            text-align: center;
+            line-height: 100px;
+        }
+
+        .rød {
+            height: 100px;
+            width: 100px;
+            background-color: red;
+            text-align: center;
+            line-height: 100px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grøn"></div>
+    <div class="rød"></div>
+
+
+    <script>
+        let grøn = document.querySelector(".grøn");
+        let rød = document.querySelector(".rød");
+
+        grøn.textContent = "Grøn firkant";
+        rød.textContent = "Rød cirkel";
+    </script>
+</body>
+
+</html>
