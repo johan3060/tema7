@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <style>
+        .grøn {
+            height: 200px;
+            width: 200px;
+            background-color: green;
+            text-align: center;
+            line-height: 300px;
+        }
+
+        .rød {
+            height: 200px;
+            width: 200px;
+            background-color: red;
+            text-align: center;
+            line-height: 300px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grøn"></div>
+    <div class="rød"></div>
+
+
+    <script>
+        let grøn = document.querySelector(".grøn");
+        let rød = document.querySelector(".rød");
+
+        grøn.innerHTML = "<img src= http://mabe-kea.dk/E19/pics/frog.png>";
+        rød.innerHTML = "<img src= http://mabe-kea.dk/E19/pics/pig.png>";
+
+        let img = document.createElement("img");
+        img.src = "http://mabe-kea.dk/E19/pics/fox.png";
+        rød.appendChild(img);
+    </script>
+</body>
+
+</html>
