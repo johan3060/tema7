@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+    <style>
+        .grøn {
+            height: 100px;
+            width: 100px;
+            background-color: green;
+            text-align: center;
+            line-height: 100px;
+        }
+
+        .rød {
+            height: 100px;
+            width: 100px;
+            background-color: red;
+            text-align: center;
+            line-height: 100px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grøn"></div>
+    <div class="rød"></div>
+
+
+    <script>
+        let grøn = document.querySelector(".grøn");
+        let rød = document.querySelector(".rød");
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            console.log("Loaded");
+
+            grøn.innerHTML = "<img src= http://mabe-kea.dk/E19/pics/frog.png>";
+            rød.innerHTML = "<img src= http://mabe-kea.dk/E19/pics/pig.png>";
+
+            grøn.addEventListener("click", bytPlads);
+            rød.addEventListener("click", stopByt);
+        }
+
+        function bytPlads() {
+            console.log("bytPlads");
+            let grønStart = grøn.innerHTML;
+            grøn.innerHTML = rød.innerHTML;
+            rød.innerHTML = grønStart;
+
+        }
+
+        function stopByt() {
+            console.log("stopByt");
+            grøn.removeEventListener("click", bytPlads);
+        }
+    </script>
+</body>
+
+</html>
