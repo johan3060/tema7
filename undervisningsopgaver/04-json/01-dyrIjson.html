@@ -11,6 +11,7 @@
             margin: 5px;
             padding: 5px;
         }
+
     </style>
 </head>
 
@@ -24,31 +25,31 @@
     <section id="liste"></section>
     <script>
         let alleDyr = [];
-        document.addEventListener("DOMContentLoaded", start);
+        document.addEventListener("DOMContentLoaded", getJson);
 
-        function start() {
-            const dest = document.querySelector("#liste");
-            const temp = document.querySelector("template");
 
-            async function getJson() {
-                let jsonData = await fetch("dyr.json");
-                alleDyr = await jsonData.json();
-                visDyr();
+        const dest = document.querySelector("#liste");
+        const temp = document.querySelector("template");
 
-            }
+        async function getJson() {
+            let jsonData = await fetch("dyr.json");
+            alleDyr = await jsonData.json();
+            visDyr();
 
-            function visDyr() {
-                alleDyr.forEach((dyr) => {
-                    const klon = temp.cloneNode(true).content;
-                    klon.querySelector("h2").textContent = dyr.navn;
-                    klon.querySelector("img").src = dyr.billede;
-                    klon.querySelector("#type").textContent = dyr.type;
-                    klon.querySelector("#levested").href += dyr.levested;
-                    dest.appendChild(klon);
-                })
-            }
-            getJson();
         }
+
+        function visDyr() {
+            alleDyr.forEach((dyr) => {
+                const klon = temp.cloneNode(true).content;
+                klon.querySelector("h2").textContent = dyr.navn;
+                klon.querySelector("img").src = dyr.billede;
+                klon.querySelector("#type").textContent = dyr.type;
+                klon.querySelector("#levested").href += dyr.levested;
+                dest.appendChild(klon);
+            })
+        }
+        getJson();
+
     </script>
 </body>
 
