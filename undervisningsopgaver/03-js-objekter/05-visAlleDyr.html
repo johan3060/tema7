@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <section class="modtager"></section>
+
+    <template>
+        <article>
+            <h1></h1>
+            <p class="billede"></p>
+        </article>
+    </template>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", start);
+        let dyr = [{
+                "navn": "gris",
+                "billede": "http://mabe-kea.dk/E19/pics/frog.png"
+            },
+
+            {
+                "navn": "frø",
+                "billede": "http://mabe-kea.dk/E19/pics/frog.png"
+            },
+            {
+                "navn": "ræv",
+                "billede": "http://mabe-kea.dk/E19/pics/fox.png"
+            },
+            {
+                "navn": "sild",
+                "billede": "http://mabe-kea.dk/E19/pics/sild.jpg"
+            },
+            {
+                "navn": "krokodille",
+                "billede": "http://mabe-kea.dk/E19/pics/kroko.jpg"
+            }
+
+        ]
+
+
+
+
+        function start() {
+
+            /*
+                        console.log("Dyr: " + dyr.navn + ", type: " + dyr.type + ", levested: " + dyr.levested);
+
+                        const navnContainer = document.querySelector("h3");
+                        const billedContainer = document.querySelector("img");
+                        const typeContainer = document.querySelector("p");
+                        const levestedContainer = document.querySelector("p + p");
+
+                        navnContainer.textContent = `${dyr.navn}`;
+                        billedContainer.src = dyr.billede;
+                        typeContainer.textContent = `${dyr.type}`;
+                        levestedContainer.textContent = `${dyr.levested}`;*/
+
+            dyr.forEach(dyr => {
+                console.log(dyr);
+            })
+
+
+            const listeVisning = document.querySelector("article");
+            dyr.forEach(dyr => {
+                listeVisning.innerHTML += `<p>${dyr.navn} ${dyr.billede}</p>`
+            })
+
+        }
+    </script>
+</body>
+
+</html>

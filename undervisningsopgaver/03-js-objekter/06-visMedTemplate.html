@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+
+    <style>
+        .modtager {
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            margin: 0 auto;
+        }
+
+        article {
+            border: 1px solid black;
+        }
+
+        @media screen and (max-width:600px) {
+            .modtager {
+                grid-template-columns: 2fr 2fr;
+            }
+        }
+
+        article:nth-child(odd) {
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="modtager"></section>
+
+    <template>
+        <article>
+            <h1></h1>
+            <img src="" alt="">
+        </article>
+    </template>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", start);
+        let dyr = [{
+                "navn": "gris",
+                "billede": "http://mabe-kea.dk/E19/pics/pig.png"
+            },
+
+            {
+                "navn": "frø",
+                "billede": "http://mabe-kea.dk/E19/pics/frog.png"
+            },
+            {
+                "navn": "ræv",
+                "billede": "http://mabe-kea.dk/E19/pics/fox.png"
+            },
+            {
+                "navn": "sild",
+                "billede": "http://mabe-kea.dk/E19/pics/sild.jpg"
+            },
+            {
+                "navn": "krokodille",
+                "billede": "http://mabe-kea.dk/E19/pics/kroko.jpg"
+            }
+
+        ]
+
+
+
+
+        function start() {
+
+            /*
+                        console.log("Dyr: " + dyr.navn + ", type: " + dyr.type + ", levested: " + dyr.levested);
+
+                        const navnContainer = document.querySelector("h3");
+                        const billedContainer = document.querySelector("img");
+                        const typeContainer = document.querySelector("p");
+                        const levestedContainer = document.querySelector("p + p");
+
+                        navnContainer.textContent = `${dyr.navn}`;
+                        billedContainer.src = dyr.billede;
+                        typeContainer.textContent = `${dyr.type}`;
+                        levestedContainer.textContent = `${dyr.levested}`;
+
+            dyr.forEach(dyr => {
+                console.log(dyr);
+            })
+
+
+            const listeVisning = document.querySelector("article");
+            dyr.forEach(dyr => {
+                listeVisning.innerHTML += `<p>${dyr.navn} ${dyr.billede}</p>`
+            })
+*/
+
+
+            const modtagerKloner = document.querySelector(".modtager");
+            const temp = document.querySelector("template");
+
+            dyr.forEach(dyr => {
+                const klon = temp.cloneNode(true).content;
+                klon.querySelector("h1").textContent = dyr.navn;
+                klon.querySelector("img").src = dyr.billede;
+                modtagerKloner.appendChild(klon);
+
+            })
+
+
+
+
+
+
+
+        }
+    </script>
+</body>
+
+</html>
