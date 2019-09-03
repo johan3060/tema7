@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Visalle</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #liste {
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: 1fr 1fr 1fr;
+            margin: 0 auto;
+        }
+
+        article {
+            border: 1px solid black;
+            margin: 5px;
+            padding: 5px;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        @media screen and (max-width: 1000px) {
+            #liste {
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            #liste {
+                grid-template-columns: repeat(1, 1fr);
+
+            }
+        }
+
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <button class="filter valgt" data-køn="alle">Alle</button>
+        <button class="filter" data-køn="m">Mænd</button>
+        <button class="filter" data-køn="k">Kvinder</button>
+        <button class="filter" data-køn="andet">Andet</button>
+
+    </header>
+    <section id="liste"></section>
+    <template>
+        <article>
+            <h2></h2>
+            <img src="" alt="">
+            <a href=""></a>
+        </article>
+    </template>
+
+    <script>
+        let personer = [];
+        let filter = "k";
+        document.addEventListener("DOMContentLoaded", getJson);
+
+
+        const dest = document.querySelector("#liste");
+        const temp = document.querySelector("template");
+
+        async function getJson() {
+            let jsonData = await fetch("https://spreadsheets.google.com/feeds/list/1Xge7slZ9dEOTCn1Yxl3OE4xgvrXOL8Y_iu3WN1yGB1U/od6/public/values?alt=json");
+            personer = await jsonData.json();
+            visPersoner();
+
+        }
+
+        function visPersoner() {
+            personer.feed.entry.forEach((person) => {
+                if (person.gsx$køn.$t == filter) {
+                    const klon = temp.cloneNode(true).content;
+                    klon.querySelector("h2").textContent = person.gsx$navn.$t;
+                    klon.querySelector("img").src = person.gsx$billede.$t;
+                    klon.querySelector("a").href = `http://github.com/${person.gsx$github.$t}`;
+                    klon.querySelector("a").textContent = `http://github.com/${person.gsx$github.$t}`;
+
+                    dest.appendChild(klon);
+                }
+            })
+        }
+        getJson();
+    </script>
+</body>
+
+</html>
