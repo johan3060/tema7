@@ -65,6 +65,35 @@
             padding-left: 100px;
             padding-right: 100px;
         }
+
+
+        #popup {
+            position: fixed;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, .7);
+            display: none;
+            overflow: scroll;
+        }
+
+        #popup img {
+            max-width: 50%;
+        }
+
+        .indhold {
+            width: 70vw;
+            min-height: 50vh;
+            background: #ffffff;
+            margin: 4rem auto;
+            padding 10px;
+        }
+
+        .luk {
+            position: fixed;
+            right: 0;
+            font-size: 2rem;
+        }
     </style>
 </head>
 
@@ -82,6 +111,20 @@
         <button class="filter" data-kategori="drikkevarer">Drikkevarer</button>
         <button class="filter" data-kategori="sideorders">Sideorders</button>
     </nav>
+
+    <div id="popup">
+        <button class="luk">X</button>
+        <section class="indhold">
+            <article class="enkeltMad">
+                <h2></h2>
+                <img src="" alt="">
+                <p class="lang"></p>
+                <p class="oprindelse"></p>
+                <p class="pris"></p>
+            </article>
+        </section>
+    </div>
+
 
     <section id="liste"></section>
     <template>
@@ -135,12 +178,34 @@
                     const klon = temp.cloneNode(true).content;
                     klon.querySelector("h2").textContent = mad.gsx$navn.$t;
                     klon.querySelector("img").src = 'billeder/' + mad.gsx$billede.$t + '.jpg';
+                    klon.querySelector("img").alt = mad.gsx$navn.$t;
                     klon.querySelector(".kort").textContent = mad.gsx$kort.$t;
                     klon.querySelector(".pris").textContent = "Pris: " + mad.gsx$pris.$t + " kr.";
                     dest.appendChild(klon);
+
+                    dest.lastElementChild.addEventListener("click", () => {
+                        visSingle(mad);
+                    });
                 }
             })
 
+        }
+
+        function visSingle(mad) {
+            document.querySelector("#popup").style.display = "block";
+            document.querySelector("#popup .luk").addEventListener("click", lukSingle);
+
+            document.querySelector(".enkeltMad h2").textContent = mad.gsx$navn.$t;
+            document.querySelector(".enkeltMad img").src = 'billeder/' + mad.gsx$billede.$t + '.jpg';
+            document.querySelector(".enkeltMad img").alt = mad.gsx$navn.$t;
+            document.querySelector(".lang").textContent = mad.gsx$lang.$t;
+            document.querySelector(".oprindelse").textContent = "Oprindelse: " + mad.gsx$oprindelse.$t;
+            document.querySelector(".pris").textContent = "Pris: " + mad.gsx$pris.$t + " kr.";
+
+        }
+
+        function lukSingle() {
+            document.querySelector("#popup").style.display = "none";
         }
 
         function addEventListenersToButtons() {
