@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bistro Babushka Single view</title>
+
+    <head>
+        <style>
+            .indhold {
+                width: 70vw;
+                min-height: 50vh;
+                background: #fff;
+                margin: 4rem auto;
+                padding: 10px;
+            }
+
+            .luk {
+                font-size: 2rem;
+                cursor: pointer;
+            }
+
+            img {
+                max-width: 50%;
+            }
+
+        </style>
+    </head>
+</head>
+
+<body>
+    <main id="single">
+        <button class="luk">Tilbage</button>
+        <section class="indhold">
+            <article class="enkeltMad">
+                <h2></h2>
+                <img src="" alt="">
+                <p class="lang"></p>
+                <p class="oprindelse"></p>
+                <p class="pris"></p>
+            </article>
+        </section>
+    </main>
+
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let navn = urlParams.get("navn");
+        console.log(navn);
+        let mad;
+        document.addEventListener("DOMContentLoaded", getJson);
+        document.querySelector(".luk").addEventListener("click", () => {
+            history.back();
+        })
+
+
+        async function getJson() {
+            let jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
+            mad = await jsonData.json();
+            visMad();
+        }
+
+        function visMad() {
+
+            mad.feed.entry.forEach(mad => {
+                if (mad.gsx$navn.$t == navn) {
+                    document.querySelector(".enkeltMad h2").textContent = mad.gsx$navn.$t;
+                    document.querySelector(".enkeltMad img").src = 'billeder/' + mad.gsx$billede.$t + '.jpg';
+                    document.querySelector(".enkeltMad img").alt = mad.gsx$navn.$t;
+                    document.querySelector(".lang").textContent = mad.gsx$lang.$t;
+                    document.querySelector(".oprindelse").textContent = "Oprindelse: " + mad.gsx$oprindelse.$t;
+                    document.querySelector(".pris").textContent = "Pris: " + mad.gsx$pris.$t + " kr.";
+
+                }
+            })
+        }
+
+    </script>
+</body>
+
+</html>

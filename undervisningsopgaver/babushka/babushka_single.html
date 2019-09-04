@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bistro Babushka single view</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+
+        .menu {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .valgt {
+            background-color: red;
+        }
+
+        #liste {
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: 1fr 1fr 1fr;
+            margin: 0 auto;
+        }
+
+        article {
+            border: 1px solid black;
+            margin: 5px;
+            padding: 5px;
+        }
+
+        article:nth-child(odd) {
+            background-color: #e6e6e6;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        @media screen and (max-width: 1000px) {
+            #liste {
+                grid-template-columns: repeat(2, 1fr);
+
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            #liste {
+                grid-template-columns: repeat(1, 1fr);
+
+            }
+        }
+
+        footer {
+            background-color: #d1cbcb;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: space-between;
+            padding-left: 100px;
+            padding-right: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <img src="billeder/banner.JPG" alt="banner">
+    </header>
+    <h1>Menu</h1>
+    <nav class="menu">
+        <button class="filter valgt" data-kategori="alle">Alle</button>
+        <button class="filter" data-kategori="forretter">Forretter</button>
+        <button class="filter" data-kategori="hovedretter">Hovvedretter</button>
+        <button class="filter" data-kategori="desserter">Desserter</button>
+        <button class="filter" data-kategori="drikkevarer">Drikkevarer</button>
+        <button class="filter" data-kategori="sideorders">Sideorders</button>
+    </nav>
+
+
+    <section id="liste"></section>
+    <template>
+        <article>
+            <h2></h2>
+            <img src="" alt="">
+            <p class="kort"></p>
+            <p class="pris"></p>
+        </article>
+    </template>
+
+    <footer>
+        <div class="wrapper">
+            <div class="venstre">
+                <p>Adresse:</p>
+                <p>Grønnegade 97</p>
+                <p>1234 København K</p>
+            </div>
+            <div class="højre">
+                <p>Åbningstider:</p>
+                <p>Mandag-Freadg: 10:30-22:00</p>
+                <p>Lørdag: 12:00-23:00</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        let mad;
+        let filterMad = "alle";
+        const dest = document.querySelector("#liste");
+        const temp = document.querySelector("template");
+        document.addEventListener("DOMContentLoaded", getJson);
+
+
+        async function getJson() {
+            let jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
+            mad = await jsonData.json();
+            visMad();
+            addEventListenersToButtons();
+
+
+        }
+
+        function visMad() {
+            dest.innerHTML = "";
+            mad.feed.entry.forEach((mad) => {
+
+                if (filterMad == "alle" || filterMad == mad.gsx$kategori.$t) {
+
+                    const klon = temp.cloneNode(true).content;
+                    klon.querySelector("h2").textContent = mad.gsx$navn.$t;
+                    klon.querySelector("img").src = 'billeder/' + mad.gsx$billede.$t + '.jpg';
+                    klon.querySelector("img").alt = mad.gsx$navn.$t;
+                    klon.querySelector(".kort").textContent = mad.gsx$kort.$t;
+                    klon.querySelector(".pris").textContent = "Pris: " + mad.gsx$pris.$t + " kr.";
+                    dest.appendChild(klon);
+
+                    dest.lastElementChild.addEventListener("click", () => {
+                        location.href = `singleview.html?navn=${mad.gsx$navn.$t}`;
+                    });
+                }
+            })
+        }
+
+
+        function addEventListenersToButtons() {
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filtrering);
+            })
+        }
+
+        function filtrering() {
+            filterMad = this.dataset.kategori;
+
+            document.querySelector("h1").textContent = this.textContent;
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.classList.remove("valgt");
+            });
+            this.classList.add("valgt");
+            visMad();
+        }
+    </script>
+</body>
+
+</html>
